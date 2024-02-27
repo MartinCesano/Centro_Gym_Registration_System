@@ -1,85 +1,121 @@
 import tkinter as tk
-ventana_principal = tk.Tk()
-ventana_principal.title("Centro Gym")
-# Establecer las dimensiones de la ventana para que ocupe toda la pantalla
-# Obtener las dimensiones de la pantalla
-ancho_pantalla = int(ventana_principal.winfo_screenwidth()*0.8)
-alto_pantalla = int(ventana_principal.winfo_screenheight()*0.8)
-# Establecer las dimensiones de la ventana para que ocupe toda la pantalla
-ventana_principal.geometry(f"{ancho_pantalla}x{alto_pantalla}+0+0")
-ventana_principal.state('zoomed')
-ventana_principal.configure(bg='#8D837E')
 
-# la ventana principal tendra una sola fila 
-ventana_principal.rowconfigure(0, weight=1)
-ventana_principal.rowconfigure(1, weight=6)
-# columna 0 menu
-ventana_principal.columnconfigure(0, minsize=150)
+class Aplicacion:
     
-# columna 1 contenido 
-ventana_principal.columnconfigure(1, weight=1)
+    def __init__(self,ventana_principal):
+        self.ventana_principal = ventana_principal
+        self.ventana_principal.title("Centro Gym")
+        # Establecer las dimensiones de la ventana para que ocupe toda la pantalla
+        # Obtener las dimensiones de la pantalla
+        self.ancho_pantalla = int(ventana_principal.winfo_screenwidth()*0.8)
+        self.alto_pantalla = int(ventana_principal.winfo_screenheight()*0.8)
+        # Establecer las dimensiones de la ventana para que ocupe toda la pantalla
+        self.ventana_principal.geometry(f"{self.ancho_pantalla}x{self.alto_pantalla}+0+0")
+        self.ventana_principal.state('zoomed')
+        self. ventana_principal.configure(bg='#8D837E')
 
-# Crear un frame - Encabezado
-encabezado = tk.Frame(ventana_principal, bg="#E02E27")
-encabezado.grid(row=0, column=0, columnspan=2,sticky="nsew")
+        # la ventana principal tendra una sola fila 
+        self.ventana_principal.rowconfigure(0, weight=1)
+        self.ventana_principal.rowconfigure(1, weight=6)
+        # columna 0 menu
+        self.ventana_principal.columnconfigure(0, minsize=150)
+        
+        # columna 1 contenido 
+        self.ventana_principal.columnconfigure(1, weight=1)
 
-# Crear un frame - MENU para la columna izquierda 
-menu = tk.Frame(ventana_principal, bg="#DCD0CA")
-menu.grid(row=1, column=0,sticky="nsew")
+        # Crear un frame - Encabezado
+        self.encabezado = tk.Frame(ventana_principal, bg="#E02E27")
+        self.encabezado.grid(row=0, column=0, columnspan=2,sticky="nsew")
 
-# Frame interior 1 dentro del frame exterior
-frame_inicio = tk.Frame(menu, bg="blue")
-frame_inicio.grid(row=0, column=0, sticky="nsew", padx=1, pady=(0.5,1))
+        # Crear un frame - CONTENIDO para la columna derecha
+        self.contenido = tk.Frame(ventana_principal, bg="#8D837E")
+        self.contenido.grid(row=1, column=1,sticky="nsew")
+        self.contenido.columnconfigure(0, weight=1)
+        self.contenido.rowconfigure(0, weight=1)
 
-menu.columnconfigure(0, minsize=150)
-menu.rowconfigure(0, weight=1)
+       
 
-frame_inicio.columnconfigure(0, weight=1) 
-frame_inicio.rowconfigure(0, weight=1)
-
-boton_inicio = tk.Button(frame_inicio, text="INICIO", bg="#555857")
-boton_inicio.grid(row=0, column=0, sticky="nsew")
-
-# Boton de Asistencia
-frame_asistencia = tk.Frame(menu, bg="white")
-frame_asistencia.grid(row=1, column=0, sticky="nsew", padx=1, pady=(1,0.5))
-
-menu.columnconfigure(0, minsize=150)
-menu.rowconfigure(1, weight=1)
-
-frame_asistencia.columnconfigure(0, weight=1) 
-frame_asistencia.rowconfigure(0, weight=1)
-
-boton_asistencia = tk.Button(frame_asistencia, text="ASISTENCIA", bg="#555857")
-boton_asistencia.grid(row=0, column=0, sticky="nsew")
-
-# Boton de Entrenados
-frame_entrenados = tk.Frame(menu, bg="blue")
-frame_entrenados.grid(row=2, column=0, sticky="nsew", padx=1, pady=(1,0.5))
-
-menu.columnconfigure(0, minsize=150)
-menu.rowconfigure(2, weight=1)
-
-frame_entrenados.columnconfigure(0, weight=1) 
-frame_entrenados.rowconfigure(0, weight=1)
-
-boton_entrenados = tk.Button(frame_entrenados, text="ENTRENADOS", bg="#555857")
-boton_entrenados.grid(row=0, column=0, sticky="nsew")
+       # Crear un frame - MENU para la columna izquierda
+        self.menu = Menu(self.ventana_principal, self.mostrar_activo)
+        self.menu.grid(row=1, column=0, sticky="nsew")
+        
+        self.mostrar_activo(InicioFrame)
 
 
-# Boton de Cuotas
-frame_cuotas = tk.Frame(menu, bg="white")
-frame_cuotas.grid(row=3, column=0, sticky="nsew", padx=1, pady=(1,1))
+    def mostrar_activo(self,FrameActivo):
+        # Limpia el frame central y muestra el frame de aplicación
+        for widget in self.contenido.winfo_children():
+            widget.destroy()
+        
+        self.activo_frame = FrameActivo(self.contenido, self.mostrar_activo)
+        self.activo_frame.grid(row=0, column=0, sticky="nsew")
 
-menu.columnconfigure(0, minsize=150)
-menu.rowconfigure(3, weight=1)
+class InicioFrame(tk.Frame):
+    def __init__(self, master, navegacion_callback):
+        super().__init__(master)
 
-frame_cuotas.columnconfigure(0, weight=1) 
-frame_cuotas.rowconfigure(0, weight=1)
+        # Etiqueta en el frame de inicio
+        etiqueta_inicio = tk.Label(self, text="Inicio", font=("Arial", 14, "bold underline"))
+        etiqueta_inicio.pack(pady=10)
 
-boton_cuotas = tk.Button(frame_cuotas, text="CUOTAS", bg="#555857")
-boton_cuotas.grid(row=0, column=0, sticky="nsew")
+        # Puedes agregar más contenido al frame de inicio según tus necesidades
+
+class AsistenciaFrame(tk.Frame):
+    def __init__(self, master, navegacion_callback):
+        super().__init__(master)
+
+        # Etiqueta en el frame de la aplicación
+        etiqueta_asistencia = tk.Label(self, text="Asistencia", font=("Arial", 14, "bold underline"))
+        etiqueta_asistencia.pack(pady=10)
+
+        # Puedes agregar más contenido al frame de aplicación según tus necesidades
+        
+class EntrenadosFrame(tk.Frame):
+    def __init__(self, master, navegacion_callback):
+        super().__init__(master)
+
+        # Etiqueta en el frame de la aplicación
+        etiqueta_entrenados = tk.Label(self, text="Entrenados", font=("Arial", 14, "bold underline"))
+        etiqueta_entrenados.pack(pady=10)
+
+        # Puedes agregar más contenido al frame de aplicación según tus necesidades
+
+class CuotasFrame(tk.Frame):
+    def __init__(self, master, navegacion_callback):
+        super().__init__(master)
+
+        # Etiqueta en el frame de la aplicación
+        etiqueta_cuotas = tk.Label(self, text="Cuotas", font=("Arial", 14, "bold underline"))
+        etiqueta_cuotas.pack(pady=10)
+
+        # Puedes agregar más contenido al frame de aplicación según tus necesidades
+
+class Menu(tk.Frame):
+    def __init__(self, master, navegacion_callback):
+        super().__init__(master, bg="#DCD0CA")
+        self.navegacion_callback = navegacion_callback
+
+        self.columnconfigure(0, weight=1)
+        self.rowconfigure(0, weight=1)
+        self.crear_boton("INICIO", InicioFrame,0)
+        self.crear_boton("ASISTENCIA", AsistenciaFrame,1)
+        self.crear_boton("ENTRENADOS", EntrenadosFrame,2)
+        self.crear_boton("CUOTAS", CuotasFrame,3)
+
+    def crear_boton(self, texto, FrameActivo,fila):
+        frame = tk.Frame(self, bg="white")
+        frame.grid(row=fila, column=0, sticky="nsew", padx=1, pady=(1, 0.5))
+
+        self.columnconfigure(0, minsize=150)
+        self.rowconfigure(fila, weight=1)
+
+        frame.columnconfigure(0, weight=1)
+        frame.rowconfigure(fila, weight=1)
+
+        boton = tk.Button(frame, font=('Arial', 16), relief=tk.FLAT, fg='white', text=texto, bg="#555857",command=lambda: self.navegacion_callback(FrameActivo))
+        boton.grid(row=fila, column=0, sticky="nsew")
 
 
-
+ventana_principal = tk.Tk()
+app = Aplicacion(ventana_principal)
 ventana_principal.mainloop()
