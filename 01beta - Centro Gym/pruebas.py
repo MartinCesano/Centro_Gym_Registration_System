@@ -16,11 +16,11 @@ class Application(tk.Tk):
         self.style = ttk.Style()
 
         # Configurar el estilo de las pestañas del Notebook
-        self.style.configure('TNotebook.Tab', font=('Cooper Black', '18'), padding=[5, 5])
+        self.style.configure('TNotebook.Tab', font=('Cooper Black', '18'), padding=[5, 5], background="blue")
 
 
         # Crear los frames
-        self.frame1 = tk.Frame(self.opciones_entrenados, bg='red')
+        self.frame1 = tk.Frame(self.opciones_entrenados, bg="#DCD0CA")
         self.frame2 = tk.Frame(self.opciones_entrenados, bg='green')
         self.frame3 = tk.Frame(self.opciones_entrenados, bg='blue')
 
