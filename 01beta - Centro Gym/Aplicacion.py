@@ -17,7 +17,7 @@ class Aplicacion:
         # Establecer las dimensiones de la ventana para que ocupe toda la pantalla
         self.ventana_principal.geometry(f"{self.ancho_pantalla}x{self.alto_pantalla}+0+0")
         self.ventana_principal.state('zoomed')
-        self.ventana_principal.configure(bg='#8D837E')
+        self.ventana_principal.configure(bg='#DCD0CA')
 
         # la ventana principal tendra una sola fila 
         self.ventana_principal.rowconfigure(0, weight=1)
@@ -32,12 +32,29 @@ class Aplicacion:
         # Crear un frame - Encabezado
         self.encabezado = tk.Frame(ventana_principal, bg="#E02E27")
         self.encabezado.grid(row=0, column=0, columnspan=2,sticky="nsew")
-     
+        self.encabezado.grid_propagate(False)
+
+        self.encabezado.columnconfigure(0, weight=2)
+        self.encabezado.columnconfigure(1, weight=1)
+        self.encabezado.columnconfigure(2, weight=2)
+
+        self.encabezado.rowconfigure(0, weight=2)
+        self.encabezado.rowconfigure(1, weight=1)
+        self.encabezado.rowconfigure(2, weight=2)
+
+        #Crear un label para el encabezado
+
+        self.titulo = tk.Label(self.encabezado, text="Centro Gym", font=("Century Gothic", 45 , "underline"), bg="#E02E27", fg="white")
+        self.titulo.grid(row=1, column=1)
+
+
         # Crear un frame - CONTENIDO para la columna derecha
-        self.contenido = tk.Frame(ventana_principal, bg="#8D837E")
+        self.contenido = tk.Frame(ventana_principal, bg="#DCD0CA")
         self.contenido.grid(row=1, column=1,sticky="nsew")
         self.contenido.columnconfigure(0, weight=1)
         self.contenido.rowconfigure(0, weight=1)
+        self.contenido.grid_propagate(False)
+
 
        # Crear un frame - MENU para la columna izquierda
         self.menu = Menu(self.ventana_principal, self.mostrar_activo)

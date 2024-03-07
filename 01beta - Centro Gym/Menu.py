@@ -26,6 +26,6 @@ class Menu(tk.Frame):
         frame.columnconfigure(0, weight=1)
         frame.rowconfigure(fila, weight=1)
 
-        boton = tk.Button(frame, font=('Arial', 16), relief=tk.FLAT, fg='white', text=texto, bg="#555857",command=lambda: self.navegacion_callback(FrameActivo))
+        boton = tk.Button(frame, font=('Century Gothic', 16, 'bold'), relief=tk.FLAT, fg='white', text=texto, bg="#555857",command=lambda: self.navegacion_callback(FrameActivo))
         boton.grid(row=fila, column=0, sticky="nsew")
 

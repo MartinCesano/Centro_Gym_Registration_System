@@ -1,38 +1,34 @@
 import tkinter as tk
-from PIL import Image, ImageTk
+from tkinter import ttk
 
-class Aplicacion:
-    def __init__(self, ventana_principal):
-        self.ventana_principal = ventana_principal
-        self.ventana_principal.title("Imagen Ajustada")
+class Application(tk.Tk):
+    def __init__(self):
+        super().__init__()
 
-        # Crear un frame
-        self.frame = tk.Frame(ventana_principal)
-        self.frame.pack()
+        self.title("Notebook Demo")
+        self.geometry("300x200")
 
-        # Cargar la imagen
-        imagen_original = Image.open(r"Pruebas\gym-encabezado.png")
+        # Crear el notebook
+        self.opciones_entrenados = ttk.Notebook(self)
+        self.opciones_entrenados.pack(fill='both', expand=True)
 
-        # Obtener el tamaño del frame
-        frame_ancho = 300
-        frame_alto = 200
+        # Crear un estilo
+        self.style = ttk.Style()
 
-        # Redimensionar la imagen al tamaño del frame
-        imagen_redimensionada = imagen_original.resize((frame_ancho, frame_alto), Image.ANTIALIAS)
+        # Configurar el estilo de las pestañas del Notebook
+        self.style.configure('TNotebook.Tab', font=('Cooper Black', '18'), padding=[5, 5])
 
-        # Convertir la imagen a un formato compatible con Tkinter
-        imagen_tk = ImageTk.PhotoImage(imagen_redimensionada)
 
-        # Crear una label para mostrar la imagen
-        self.label_imagen = tk.Label(self.frame, image=imagen_tk)
-        self.label_imagen.image = imagen_tk  # Conservar una referencia para evitar que la imagen se elimine por el recolector de basura
-        self.label_imagen.pack()
+        # Crear los frames
+        self.frame1 = tk.Frame(self.opciones_entrenados, bg='red')
+        self.frame2 = tk.Frame(self.opciones_entrenados, bg='green')
+        self.frame3 = tk.Frame(self.opciones_entrenados, bg='blue')
 
-# Crear la ventana principal
-ventana_principal = tk.Tk()
+        # Añadir los frames al notebook
+        self.opciones_entrenados.add(self.frame1, text='Frame 1')
+        self.opciones_entrenados.add(self.frame2, text='Frame 2')
+        self.opciones_entrenados.add(self.frame3, text='Frame 3')
 
-# Crear la aplicación
-app = Aplicacion(ventana_principal)
-
-# Iniciar el bucle de eventos
-ventana_principal.mainloop()
+if __name__ == "__main__":
+    app = Application()
+    app.mainloop()
