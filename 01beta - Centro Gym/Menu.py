@@ -17,7 +17,7 @@ class Menu(tk.Frame):
         self.crear_boton("CUOTAS", CuotasFrame,3)
 
     def crear_boton(self, texto, FrameActivo,fila):
-        frame = tk.Frame(self, bg="white")
+        frame = tk.Frame(self, bg="#DCD0CA")
         frame.grid(row=fila, column=0, sticky="nsew", padx=1, pady=(1, 0.5))
 
         self.columnconfigure(0, minsize=150)
