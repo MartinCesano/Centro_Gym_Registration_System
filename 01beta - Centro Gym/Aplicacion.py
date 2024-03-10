@@ -34,9 +34,10 @@ class Aplicacion:
         self.encabezado.grid(row=0, column=0, columnspan=2,sticky="nsew")
         self.encabezado.grid_propagate(False)
 
-        self.encabezado.columnconfigure(0, weight=2)
+        self.encabezado.columnconfigure(0, weight=3)
         self.encabezado.columnconfigure(1, weight=1)
-        self.encabezado.columnconfigure(2, weight=2)
+        self.encabezado.columnconfigure(2, weight=4)
+        self.encabezado.columnconfigure(3, weight=4)
 
         self.encabezado.rowconfigure(0, weight=2)
         self.encabezado.rowconfigure(1, weight=1)
